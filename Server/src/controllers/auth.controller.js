@@ -95,5 +95,18 @@ export const logout= async (req,res)=>{
 };
 
 export const login= async (req,res)=>{
-    await res.send("Login Route");
+    try {
+        res.clearCookie("jwt-token");
+        res.status(200).json({
+            success:true,
+            message:"Logout"
+        })
+    }
+    catch (error) {
+        console.log("Error in logout Controller", error.message);
+        res.status(500).json({
+            success:false,
+            message:"Internal Server Error"
+        })
+    }
 };

@@ -6,6 +6,8 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json()); //will allow us to parse req.body
+
 app.use("/api/v1/auth",authRoutes)
 
 export default app;

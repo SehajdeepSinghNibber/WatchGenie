@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import bycriptjs from "bcryptjs"
+import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const signup= async (req,res)=>{
     try {
@@ -70,15 +71,15 @@ export const signup= async (req,res)=>{
             image
         });
 
+        generateTokenAndSetCookie(newUser._id,res);
         await newUser.save();
 
-        return res.status(201).json({
-            success:true,
-            message:"User Created!!",
-            user:{
-                ...newUser._doc,
-                password:""
-            }
+        return res.status(201).json({            success:true,
+        message:"User Created!!",
+        user:{
+           ...newUser._doc,
+            password:""
+        }
         })
 
     } catch (error) {

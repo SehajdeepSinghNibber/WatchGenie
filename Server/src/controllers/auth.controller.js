@@ -90,11 +90,11 @@ export const signup= async (req,res)=>{
     }
 };
 
-export const logout= async (req,res)=>{
-    await res.send("Logout Route");
+export const login= async (req,res)=>{
+    await res.send("Login Route");
 };
 
-export const login= async (req,res)=>{
+export const logout= async (req,res)=>{
     try {
         res.clearCookie("jwt-token");
         res.status(200).json({

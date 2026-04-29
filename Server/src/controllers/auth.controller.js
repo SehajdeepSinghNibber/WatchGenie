@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import bycriptjs from "bcryptjs"
+import bcriptjs from "bcryptjs"
 import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 export const signup= async (req,res)=>{
@@ -48,8 +48,8 @@ export const signup= async (req,res)=>{
             })
         }
 
-        const salt =  await bycriptjs.genSalt(10)
-        const hashedPassword = await bycriptjs.hash(password,salt)
+        const salt =  await bcriptjs.genSalt(10)
+        const hashedPassword = await bcriptjs.hash(password,salt)
 
         const ProfilePics = ["/avatar1.png","/avatar2.png","/avatar3.png"]
 
@@ -71,15 +71,16 @@ export const signup= async (req,res)=>{
             image
         });
 
-        generateTokenAndSetCookie(newUser._id,res);
         await newUser.save();
+        generateTokenAndSetCookie(newUser._id,res);
 
-        return res.status(201).json({            success:true,
-        message:"User Created!!",
-        user:{
-           ...newUser._doc,
-            password:""
-        }
+        return res.status(201).json({
+            success:true,
+            message:"User Created!!",
+            user:{
+                ...newUser._doc,
+                password:""
+            }
         })
 
     } catch (error) {
@@ -91,7 +92,44 @@ export const signup= async (req,res)=>{
 };
 
 export const login= async (req,res)=>{
-    await res.send("Login Route");
+    try {
+        const {email,password} = req.body;
+
+        if(!email || !password){
+            return res.send(400).json({
+                success: false,
+                message:"Provide both email and password"
+            })
+        }
+
+        const user = await User.findOne({email:email})
+        if(!user){
+            return res.status(400).json({
+                success:false,
+                message:"Invalid Credentials"
+            })
+        }
+
+        const isPasswordCorrect = await bcriptjs.compare(password,user.password)
+        if(!isPasswordCorrect){
+            return res.send(400).json({
+                success:false,
+                message:"Invalid Credentials"
+            })
+        }
+
+        generateTokenAndSetCookie(user._id,res)
+
+        res.status(200).json({
+            success:true,
+            user: {...user._doc,
+                password:""
+            }
+        })
+
+    } catch (error) {
+        console.log(`error is : ${error.message}`)
+    }
 };
 
 export const logout= async (req,res)=>{

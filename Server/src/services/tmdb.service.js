@@ -7,17 +7,32 @@ const fetchFromTmdb = async (url) => {
       accept: "application/json",
       Authorization: "Bearer " + config.TMDB_API_KEY,
     },
+    timeout: 10000,
   };
 
-  const response = await axios.get(url, options);
+  let lastError;
 
-  if (response.status !== 200) {
-    throw new Error(
-      "Failed to fetch data from TMDB: " + response.statusText
-    );
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await axios.get(url, options);
+
+      if (response.status !== 200) {
+        throw new Error(
+          "Failed to fetch data from TMDB: " + response.statusText
+        );
+      }
+
+      return response.data;
+    } catch (error) {
+      lastError = error;
+
+      if (!["ECONNRESET", "ETIMEDOUT", "ECONNABORTED"].includes(error.code) || attempt === 3) {
+        throw error;
+      }
+    }
   }
 
-  return response.data;
+  throw lastError;
 };
 
   // For fetch it would be

@@ -96,7 +96,7 @@ export const login= async (req,res)=>{
         const {email,password} = req.body;
 
         if(!email || !password){
-            return res.send(400).json({
+            return res.status(400).json({
                 success: false,
                 message:"Provide both email and password"
             })
@@ -112,7 +112,7 @@ export const login= async (req,res)=>{
 
         const isPasswordCorrect = await bcriptjs.compare(password,user.password)
         if(!isPasswordCorrect){
-            return res.send(400).json({
+            return res.status(400).json({
                 success:false,
                 message:"Invalid Credentials"
             })

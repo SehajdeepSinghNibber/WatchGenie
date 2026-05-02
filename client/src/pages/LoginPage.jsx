@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 const LoginPage = () => {
 
-  const [email,setEmail] = useState<string>("")
-  const [password,setPassword] = useState<string>("")
+  const [email,setEmail] = useState("")
+  const [password,setPassword] = useState("")
 
-  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = (e) => {
   e.preventDefault();
   console.log(email, password);
 };

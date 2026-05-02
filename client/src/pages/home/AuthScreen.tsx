@@ -1,10 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 const AuthScreen = () => {
 
     const [email,setEmail] = useState<string>("");
+
+    const navigate = useNavigate();
+
+    const handleFormSubmit=(e: React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        navigate("/signup?email="+email);
+    }
 
   return (
     <>
@@ -31,7 +38,7 @@ const AuthScreen = () => {
             <p className="mb-4">
                 Ready to watch? Enter your Email to create or restart your membership.
             </p>
-            <form className='flex flex-col md:flex-row gap-4 w-1/2'>
+            <form className='flex flex-col md:flex-row gap-4 w-1/2' onSubmit={handleFormSubmit}>
                 <input
                     type='email'
                     placeholder='Email address'
@@ -39,7 +46,7 @@ const AuthScreen = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
-                <button className='bg-sky-500 text-xl lg:text-2xl px-2 lg:px-6 py-1 md:py-2 rounded flex justify-center items-center'>
+                <button type='submit' className='bg-sky-500 text-xl lg:text-2xl px-2 lg:px-6 py-1 md:py-2 rounded flex justify-center items-center'>
                     Get Started
                     <ChevronRight className='size-8 md:size-10' />
                 </button>

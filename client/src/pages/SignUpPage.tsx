@@ -1,14 +1,21 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAuthStore } from '../store/authUser'
 
 const SignUpPage = () => {
 
-  const [email,setEmail] = useState<string>("")
+  const { searchParams } = new URL(document.location.href)
+  const emailValue = searchParams.get('email')
+
+  const [email,setEmail] = useState<string>(emailValue || "")
   const [username,setUsername] = useState<string>("")
   const [password,setPassword] = useState<string>("")
 
+  const { signup } = useAuthStore();
+
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
+  signup();
   console.log(email, username, password);
 };
 

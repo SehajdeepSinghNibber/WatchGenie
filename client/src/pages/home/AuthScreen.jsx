@@ -4,11 +4,11 @@ import { ChevronRight } from "lucide-react";
 
 const AuthScreen = () => {
 
-    const [email,setEmail] = useState<string>("");
+    const [email,setEmail] = useState("");
 
     const navigate = useNavigate();
 
-    const handleFormSubmit=(e: React.FormEvent<HTMLFormElement>)=>{
+    const handleFormSubmit=(e)=>{
         e.preventDefault();
         navigate("/signup?email="+email);
     }

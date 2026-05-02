@@ -7,13 +7,13 @@ const SignUpPage = () => {
   const { searchParams } = new URL(document.location.href)
   const emailValue = searchParams.get('email')
 
-  const [email,setEmail] = useState<string>(emailValue || "")
-  const [username,setUsername] = useState<string>("")
-  const [password,setPassword] = useState<string>("")
+  const [email,setEmail] = useState(emailValue || "")
+  const [username,setUsername] = useState("")
+  const [password,setPassword] = useState("")
 
   const { signup } = useAuthStore();
 
-  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = (e) => {
   e.preventDefault();
   signup();
   console.log(email, username, password);

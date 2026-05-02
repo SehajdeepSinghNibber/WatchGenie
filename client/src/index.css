@@ -1,8 +1,1 @@
 @import "tailwindcss";
-
-.hero-bg{
-    background-image: linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.28)),url("../public/hero.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}

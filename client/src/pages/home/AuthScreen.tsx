@@ -21,7 +21,7 @@ const AuthScreen = () => {
 
         {/* Hero Section */}
 
-        <div className="flex flex-col items-center justify-center text-center -mt-40 text-white max-w-6xl mx-auto h-screen">
+        <div className='flex flex-col items-center justify-center text-center py-40 text-white max-w-6xl mx-auto h-[60vh]'>
             <h1 className="text-4xl md:text-6xl font-bold mb-4">
                 Watch all your Favourites much more...
             </h1>
